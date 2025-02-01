@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.orangehrm.base.BaseClass;
+import com.orangehrm.utilities.ExtentManager;
 
 /**
  * @author Prabhakar added on 24th Jan 2025
@@ -39,8 +40,10 @@ public class ActionDriver {
 		try {
 			waitForElementToBeClickable(by);
 			driver.findElement(by).click();
+			ExtentManager.logStep("Clicked an Element : "+elementDescription);
 			logger.info(" Clicked an element-->"+elementDescription);
 		} catch (Exception e) {
+			ExtentManager.logFailure(BaseClass.getDriver(), "Unable to click on Element:", elementDescription+"Unable to Click");
 			logger.error("Unable to click Element : "+e.getMessage());
 		}
 		
@@ -82,14 +85,17 @@ public class ActionDriver {
 			if(expectedText.equals(actualText))
 			{
 				logger.info("Text are Matching : "+actualText+" equals "+expectedText);
+				ExtentManager.logStepWithScreenShot(BaseClass.getDriver(), "Compare Text", "Text Veriffied Successfully! "+actualText+" equals "+expectedText);
 				return true;
 			}
 			else {
 				logger.error("Text are not Matching : "+actualText+" not equals "+expectedText);
+				ExtentManager.logFailure(BaseClass.getDriver(), "Text Comparison Failed", "Text Verification Failed "+actualText+" not equals "+expectedText);
 				return false;
 			}
 		} catch (Exception e) {
 			logger.error("Unable to compare Texts : "+e.getMessage());
+			ExtentManager.logFailure(BaseClass.getDriver(), "Text Comparison Failed", "Text Verification Failed ");
 			
 		}
 		return false;
@@ -118,10 +124,12 @@ public class ActionDriver {
 		try {
 			waitForElementToBeVisible(by);
 			logger.info("Element is displayed: "+getElementDescription(by));
+			ExtentManager.logStepWithScreenShot(BaseClass.getDriver(), "Element is displayed", "Element is Displayed "+getElementDescription(by));
 			return driver.findElement(by).isDisplayed();
 			
 		} catch (Exception e) {
 			logger.error("Element is not Displayed : "+e.getMessage());
+			ExtentManager.logFailure(BaseClass.getDriver(),"Element is not displayed: ","Element is not dispalyed"+getElementDescription(by));
 			return false;
 		}
 	}
