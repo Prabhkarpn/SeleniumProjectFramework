@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import com.orangehrm.base.BaseClass;
 import com.orangehrm.pages.HomePage;
 import com.orangehrm.pages.LoginPage;
+import com.orangehrm.utilities.DataProviders;
 import com.orangehrm.utilities.ExtentManager;
 
 import junit.framework.Assert;
@@ -23,11 +24,11 @@ public class HomePageTest extends BaseClass{
 		
 	}
 	
-	@Test
-	public void verifyOrangeHRMLogo() {
+	@Test(dataProvider="validLoginData", dataProviderClass = DataProviders.class)
+	public void verifyOrangeHRMLogo(String username, String password) {
 		//ExtentManager.startTest("Home Page verify Logo Test"); -- This has been implemented in TestListener
 		System.out.println("Running testMethod2 on Thread: "+Thread.currentThread().getId());
-		loginPage.login("Admin", "admin123");
+		loginPage.login(username, password);
 		ExtentManager.logStep("Verifying Logo is visible or not");
 		staticWait(10);
 		Assert.assertTrue("Logo is not Visible",homePage.verifyOrangeHRMLogo());

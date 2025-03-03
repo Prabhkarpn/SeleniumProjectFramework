@@ -7,6 +7,12 @@ import org.testng.annotations.Test;
 import com.orangehrm.base.BaseClass;
 import com.orangehrm.utilities.ExtentManager;
 
+
+
+
+
+
+
 public class DummyClass extends BaseClass{
 	
 	@Test

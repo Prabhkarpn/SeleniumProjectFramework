@@ -26,7 +26,7 @@ public class BaseClass {
 	//protected static WebDriver driver;
 	//private static ActionDriver actionDriver;
 	
-	private static ThreadLocal<WebDriver>driver = new ThreadLocal<>();
+	protected static ThreadLocal<WebDriver>driver = new ThreadLocal<>();
 	private static ThreadLocal<ActionDriver>actionDriver = new ThreadLocal<>();
 	
 	

@@ -7,9 +7,11 @@ import org.testng.annotations.Test;
 import com.orangehrm.base.BaseClass;
 import com.orangehrm.pages.HomePage;
 import com.orangehrm.pages.LoginPage;
+import com.orangehrm.utilities.DataProviders;
 import com.orangehrm.utilities.ExtentManager;
 
 public class LoginPageTest extends BaseClass{
+	
 	
 	private LoginPage loginPage;
 	private HomePage homePage;
@@ -22,12 +24,12 @@ public class LoginPageTest extends BaseClass{
 		
 	}
 	
-	@Test
-	public void verifyValidLoginTest() {
+	@Test(dataProvider="validLoginData", dataProviderClass = DataProviders.class)
+	public void verifyValidLoginTest(String username, String password) {
 		//ExtentManager.startTest("Valid Login Test"); -- This has been implemented in TestListener
 		System.out.println("Running testMethod1 on Thread: "+Thread.currentThread().getId());
 		ExtentManager.logStep("Navigating to Login Page enetring username and Password");
-		loginPage.login("Admin", "admin123");
+		loginPage.login(username, password);
 		ExtentManager.logStep("Verrifying admin tab is visible or not");
 		Assert.assertTrue(homePage.isAdminTabVisible(),"Admin tab should be visible After successful Login");
 		ExtentManager.logStep("Validation successfully!");
@@ -36,12 +38,12 @@ public class LoginPageTest extends BaseClass{
 		staticWait(5);
 	}
 	
-	@Test
-	public void inValidLoginTest() {
+	@Test(dataProvider="inValidLoginData", dataProviderClass = DataProviders.class)
+	public void inValidLoginTest(String username, String password) {
 		//ExtentManager.startTest("Invalid Login Test"); -- This has been implemented in TestListener
 		System.out.println("Running testMethod2 on Thread: "+Thread.currentThread().getId());
 		ExtentManager.logStep("Navigating to Login Page enetring username and Password");
-		loginPage.login("Admin", "admin123");
+		loginPage.login(username,password);
 		staticWait(5);
 		String expectedErrorMessage = "Invalid credentials";
 		Assert.assertTrue(loginPage.verifyErrorMessage(expectedErrorMessage),"Test Failed : Invalid Error Message");
